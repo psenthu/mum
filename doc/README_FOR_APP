@@ -1,2 +1,88 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+index.html.erb
+==============
+
+<script type="text/x-handlebars">
+	{{#view DashboardApp.UserListView tagName = "ul" class="userlist"}}
+		<h1> Users </h1>
+		{{#each users}}
+			{{#view DashboardApp.UserView userBinding = "this"}}
+				<h3> {{user.first_name}} </h3> <a {{action del}}> [-] </a>
+				<p> <a {{action save}}> [save] </a> </p>
+				{{view Em.TextField valueBinding = "user.first_name"}}
+			{{/view}}
+		{{/each}}
+
+		<a href="#" {{action gen}}> Gen list </a> 
+	{{/view}}
+</script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		dashboard();	
+	})
+</script>
+
+
+dashboard-app.js
+================
+
+dashboard = function(){
+
+	DashboardApp = Em.Application.create();
+
+	DashboardApp.User = Em.Object.extend({
+		first_name:null,
+		last_name:null,
+		fb_id:null,
+
+		save:function(rec){
+			console.log("Save!" + this.get('first_name'));
+		}
+
+	});
+
+	DashboardApp.UserListController = Em.Object.create({
+		users : [],
+		init:function(){
+
+		}
+
+
+	});
+
+	DashboardApp.UserListView = Em.View.extend({
+		usersBinding: "DashboardApp.UserListController.users",
+		
+		gen:function(){
+			var users = DashboardApp.UserListController.get('users');
+			var username = "user" + users.length;
+
+			users.pushObject(
+				
+				DashboardApp.User.create({
+					first_name : username	
+				})
+			);				
+
+		}
+	});
+
+	DashboardApp.UserView = Em.View.extend({
+		user:null,
+
+		del:function(){
+			var users = DashboardApp.UserListController.get('users');
+			users.removeObject(this.get('user'));
+		},
+
+		save:function(){
+			var user = this.get('user');
+			user.save();
+		}
+	})
+
+}

@@ -1,4 +1,5 @@
 Mum::Application.routes.draw do
+  resources :dashboard
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
