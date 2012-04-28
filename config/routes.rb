@@ -1,5 +1,12 @@
 Mum::Application.routes.draw do
   resources :dashboard
+
+  constraints(:subdomain => /.+/) do
+    match "transactions/:user_id/transfer/:to_user_id/:fund/:currency" => "transactions#transfer"
+    match "transactions/:user_id/add/:fund/:currency" => "transactions#add"
+    match "transactions/:user_id/deduct/:fund/:currency" => "transactions#deduct"
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
