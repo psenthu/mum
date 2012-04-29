@@ -1,0 +1,11 @@
+<h1> Users </h1>
+
+<script type="text/x-handlebars">
+  {{ view App.ListUsersView }}
+</script>
+
+<script type="text/javascript">
+  $(function() {
+    App.usersController.loadAll(<%= @users.to_json.html_safe %>)
+  });
+</script>
