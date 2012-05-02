@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+100:
+  code: 100
+  description: "Fund transfered successfully"
+101:
+  code: 101
+  description: "Fund credited successfully"
+102:
+  code: 102
+  description: "Fund deducted successfully"
+200:
+  code: 200
+  description: "Insufficient fund in transferer's account"
+201:
+  code: 201
+  description: "Invalid user"
+202:
+  code: 202
+  description: "Invalid fund"
+203:
+  code: 203
+  description: "Invalid currency"
