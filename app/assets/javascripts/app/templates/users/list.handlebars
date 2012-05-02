@@ -1,0 +1,15 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Full name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+      {{view App.ShowUserView userBinding="this"}}
+    {{/each}}
+  </tbody>
+</table>
