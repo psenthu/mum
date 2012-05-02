@@ -5,12 +5,7 @@ module HandleTransaction
   end
 
   def fund_available?
-    fund_for_user > self.fund.abs
-  end
-
-  def fund_for_user
-    Transaction.where("user_id = ?", self.user_id).
-                sum("fund")
+    Transaction.user_fund(self.user_id).sum("fund") > self.fund.abs
   end
 
   module ClassMethods

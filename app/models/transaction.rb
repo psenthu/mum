@@ -22,6 +22,10 @@ class Transaction < ActiveRecord::Base
   #callbacks
   before_save :set_user_id, :if => :transfer?
 
+  scope :user_fund, lambda do |u_id|
+    where("user_id = ?", u_id)
+  end
+
   private
 
   def set_user_id
