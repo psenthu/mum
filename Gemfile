@@ -11,7 +11,6 @@ gem "twitter-bootstrap-rails"
 gem 'therubyracer'
 gem 'devise'
 gem 'acts_as_tenant'
-gem 'pry'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,6 +22,14 @@ group :assets do
   # gem 'therubyracer'
 
   gem 'uglifier', '>= 1.0.3'
+end
+
+group :development do
+  gem 'pry'
+end
+
+group :test do
+  gem 'pry'
 end
 
 gem 'jquery-rails'
