@@ -1,7 +1,7 @@
 class TransactionsController < ApplicationController
   def transfer
     params[:info] = "receiver: #{params[:to_user_id]}\ntransferer: #{params[:user_id]}"
-    params[:type] = "TF"
+    params[:transaction_type] = "TF"
     binding.pry
     respond_to do |format|
       format.html { render :json => Transaction.process_transaction(params)}
@@ -9,7 +9,7 @@ class TransactionsController < ApplicationController
   end
 
   def add
-    params[:type] = "AC"
+    params[:transaction_type] = "AC"
 
     respond_to do |format|
       format.html { render :json => Transaction.process_transaction(params)}
@@ -17,7 +17,7 @@ class TransactionsController < ApplicationController
   end
 
   def deduct
-    params[:type] = "DC"
+    params[:transaction_type] = "DC"
 
     respond_to do |format|
       format.html { render :json => Transaction.process_transaction(params)}

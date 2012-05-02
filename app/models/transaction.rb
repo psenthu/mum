@@ -22,10 +22,8 @@ class Transaction < ActiveRecord::Base
   #callbacks
   before_save :set_user_id, :if => :transfer?
 
-  scope :user_fund, lambda do |u_id|
-    where("user_id = ?", u_id)
-  end
-
+  scope :user_fund, lambda { |u_id| where("user_id = ?", u_id) }
+  
   private
 
   def set_user_id
@@ -37,7 +35,7 @@ class Transaction < ActiveRecord::Base
   end
 
   def validation
-    self.errors.add :fund, "200" if self.type == "TF" && 
+    self.errors.add :fund, "200" if self.transaction_type == "TF" && 
                                     self.fund && 
                                     self.operation == "deduct" && 
                                     !self.fund_available?
