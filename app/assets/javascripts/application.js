@@ -15,11 +15,9 @@
 //= require twitter/bootstrap
 //= require ./vendor/ember-0.9.7.1.min
 //= require ./vendor/ember-rest
-//= require_tree ./lib
 //= require app/app
 //= require_tree ./app/models
 //= require_tree ./app/controllers
 //= require_tree ./app/views
-//= require_tree ./app/helpers
 //= require_tree ./app/templates
 //= require_tree .
