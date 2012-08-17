@@ -9,5 +9,5 @@ transaction1:
   user_id: 1
   account_id: 1
   currency: "pound"
-  type: "AC"
+  transaction_type: "AC"
   fund: 150

@@ -20,22 +20,23 @@ class TransactionTest < ActiveSupport::TestCase
 
   def test_un_successful_fund_transfer
     load_fixtures_to_db
-    
+
     ActsAsTenant.current_tenant = accounts(:aightify)
 
     params = {}
     params[:user_id]    = "nn"
     params[:to_user_id] = 88
-    params[:cash]       = 100
+    params[:fund]       = 100
     params[:currency]   = "POUND"
     params[:info]       = "receiver: #{params[:to_user_id]}\ntransferer: #{params[:user_id]}"
+    params[:transaction_type] = "TF"
 
     assert_equal Transaction.process_transaction(params).length, 4
   end
 
   def test_successful_add_credit
     load_fixtures_to_db
-    
+
     ActsAsTenant.current_tenant = accounts(:aightify)
 
     params = {}
@@ -50,7 +51,7 @@ class TransactionTest < ActiveSupport::TestCase
 
   def test_un_successful_add_credit
     load_fixtures_to_db
-    
+
     ActsAsTenant.current_tenant = accounts(:aightify)
 
     params = {}
@@ -65,7 +66,7 @@ class TransactionTest < ActiveSupport::TestCase
 
   def test_successful_deduct_credit
     load_fixtures_to_db
-    
+
     ActsAsTenant.current_tenant = accounts(:aightify)
 
     params = {}
@@ -80,7 +81,7 @@ class TransactionTest < ActiveSupport::TestCase
 
   def test_un_successful_deduct_credit
     load_fixtures_to_db
-    
+
     ActsAsTenant.current_tenant = accounts(:aightify)
 
     params = {}

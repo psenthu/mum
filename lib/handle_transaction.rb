@@ -34,6 +34,8 @@ module HandleTransaction
         r.transaction_type = params[:transaction_type]
         r.info = params[:info]
         r.fund = params[:fund]
+        # Following line added by Saravana
+        r.currency = params[:currency]
         r.operation = "add"
       end
       receiver.save
@@ -48,6 +50,8 @@ module HandleTransaction
         r.transaction_type = params[:transaction_type]
         r.info = params[:info]
         r.fund = "-#{params[:fund]}".to_f
+        # Following line added by Saravana
+        r.currency = params[:currency]
         r.operation = "deduct"
       end
       deducter.save
