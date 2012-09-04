@@ -1,4 +1,15 @@
 class TransactionsController < ApplicationController
+	before_filter :authenticate_user!
+
+	def index
+		@transactions = []
+		@transactions = Transaction.all
+		
+		respond_to do |format|
+      format.json { render :json => @transactions}
+    end
+	end
+	
   def transfer
     params[:info] = "receiver: #{params[:to_user_id]}\ntransferer: #{params[:user_id]}"
     params[:transaction_type] = "TF"

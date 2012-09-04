@@ -71,7 +71,7 @@ module HandleTransaction
           responses << v
         end
       end
-
+      
       responses
     end
   end
