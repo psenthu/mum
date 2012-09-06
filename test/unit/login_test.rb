@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'rest_client'
 
 class LoginTest < ActiveSupport::TestCase
 
@@ -11,13 +12,48 @@ class LoginTest < ActiveSupport::TestCase
     assert !@user.authentication_token.nil?
     
   end
-
-  #def test_successful_token_access
-  	#
-  #end
   
-  #def test_unsuccessful_token_access
-  	#
-  #end
+  def test_successful_token_access
+  	load_fixtures_to_db
+  	
+  	url = "http://localhost:3000/transactions.json"
+  	
+  	begin
+  		transactions = RestClient.get url+"?auth_token=123TEST"
+  		transactions = JSON.parse(transactions)
+  	rescue Exception => e
+  		transactions = e
+  	end
+  	
+  	assert_equal transactions.length, 1  	
+  end
+
+  def test_unsuccessful_wrong_token_access
+  	load_fixtures_to_db
+  	
+  	url = "http://localhost:3000/transactions.json"
+  	
+  	begin
+  		transactions = RestClient.get url+"?auth_token=GERTET356BVETHGDl"
+  	rescue Exception => e
+  		transactions = e
+  	end
+  	
+  	assert_equal transactions.message, "401 Unauthorized"  	
+  end
+  
+  def test_unsuccessful_no_token_access
+  	load_fixtures_to_db
+  	
+  	url = "http://localhost:3000/transactions.json"
+  	
+  	begin
+  		transactions = RestClient.get url
+  	rescue Exception => e
+  		transactions = e
+  	end
+  	
+  	assert_equal transactions.message, "401 Unauthorized"
+  end
 
 end

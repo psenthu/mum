@@ -12,6 +12,7 @@ pragash:
   email: pragash@gmail.com
   encrypted_password: password
   account_id: 1
+  authentication_token: 123TEST
 
 mathu:
   id: 2
@@ -20,3 +21,4 @@ mathu:
   email: mathu@gmail.com
   encrypted_password: password
   account_id: 1
+  authentication_token: 123TEST
