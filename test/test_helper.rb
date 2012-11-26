@@ -14,6 +14,7 @@ class ActiveSupport::TestCase
     accounts.each {|a| Account.create(a)}
     users.each {|a| User.create(a)}
     transactions.each {|a| Transaction.create(a)}
+    response_statuses.each {|a| ResponseStatus.create(a)}	#	This line added by Saravana
   end
 
 end

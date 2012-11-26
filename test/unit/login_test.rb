@@ -1,6 +1,11 @@
 require 'test_helper'
 require 'rest_client'
 
+# *******************IMPORTANT*********************************
+# Rails server must be running in test environment at port 3000
+# for the following tests to pass.
+# *************************************************************
+
 class LoginTest < ActiveSupport::TestCase
 
   def test_generate_token
