@@ -30,7 +30,7 @@ class LoginTest < ActiveSupport::TestCase
   		transactions = e
   	end
   	
-  	assert_equal transactions.length, 1  	
+  	assert_equal transactions.length, 2  	
   end
 
   def test_unsuccessful_wrong_token_access

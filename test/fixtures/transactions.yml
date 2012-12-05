@@ -11,3 +11,10 @@ transaction1:
   currency: "pound"
   transaction_type: "AC"
   fund: 150
+
+transaction2:
+  user_id: 2
+  account_id: 1
+  currency: "USD"
+  transaction_type: "AC"
+  fund: 200

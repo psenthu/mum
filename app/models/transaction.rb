@@ -1,29 +1,33 @@
 class Transaction < ActiveRecord::Base
   include HandleTransaction
 
-  belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
-  belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id'
+  # belongs_to :user, :class_name => 'Sclient', :primary_key => 'user_id', :foreign_key => 'user_id'
+  belongs_to :account, :class_name => 'Account'#, :foreign_key => 'account_id'
 
-  #validations
-  validates :user_id,   :numericality => { :message => "201", 
-                                           :greater_than => 0, 
-                                           :only_integer => true, 
-                                           :allow_nil => false }
-  validates :fund,      :numericality => { :message => "202", 
-                                           :allow_nil => false }
+  # => validations
+  validates :user_id, :numericality => {  :message      => "201", 
+                                          :greater_than => 0, 
+                                          :only_integer => true, 
+                                          :allow_nil    => false  }
+
+  validates :fund,    :numericality => {  :message      => "202", 
+                                          :allow_nil    => false  }
+
   validate  :validation
+  validate  :user_existancy
 
-  #multi tenancy
+  # => multi tenancy
   acts_as_tenant(:account)
 
-  #attributes
+  # => attributes
   attr_accessor :to_user_id, :operation
 
-  #callbacks
+  # => callbacks
   before_save :set_user_id, :if => :transfer?
 
   scope :user_fund, lambda { |u_id| where("user_id = ?", u_id) }
   
+
   private
 
   def set_user_id
@@ -39,6 +43,12 @@ class Transaction < ActiveRecord::Base
                                     self.fund && 
                                     self.operation == "deduct" && 
                                     !self.fund_available?
+    return false
+  end
+
+  def user_existancy
+    self.errors.add :user, "201" if Sclient.where(:user_id => self.user_id.to_i).length == 0
+
     return false
   end
 

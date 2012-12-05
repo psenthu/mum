@@ -3,7 +3,14 @@ class TransactionsController < ApplicationController
 
 	def index
 		@transactions = []
-		@transactions = Transaction.all
+		
+    if params[:user_id]
+      puts "\nUser id is : #{params[:user_id]}\n"
+      @transactions = Transaction.where(:user_id => params[:user_id])
+    else
+      puts "get all"
+      @transactions = Transaction.all
+    end
 		
 		respond_to do |format|
       format.json { render :json => @transactions}

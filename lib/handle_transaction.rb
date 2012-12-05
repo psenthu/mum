@@ -11,7 +11,7 @@ module HandleTransaction
   module ClassMethods
     def process_transaction(params)
       deduct = nil
-      add = nil
+      add    = nil
 
       if params[:transaction_type] == "TF"
         Transaction.transaction do
@@ -29,14 +29,14 @@ module HandleTransaction
 
     def add_credit(params)
       receiver = Transaction.new() do |r|
-        r.user_id = params[:to_user_id] ||= params[:user_id]
-        r.account_id = ActsAsTenant.current_tenant.id
+        r.user_id          = params[:to_user_id] ||= params[:user_id]
+        r.account_id       = ActsAsTenant.current_tenant.id
         r.transaction_type = params[:transaction_type]
-        r.info = params[:info]
-        r.fund = params[:fund]
+        r.info             = params[:info]
+        r.fund             = params[:fund]
         # Following line added by Saravana
-        r.currency = params[:currency]
-        r.operation = "add"
+        r.currency         = params[:currency]
+        r.operation        = "add"
       end
       receiver.save
 
@@ -45,14 +45,14 @@ module HandleTransaction
 
     def deduct_credit(params)
       deducter = Transaction.new() do |r|
-        r.user_id = params[:user_id]
-        r.account_id = ActsAsTenant.current_tenant.id
+        r.user_id          = params[:user_id]
+        r.account_id       = ActsAsTenant.current_tenant.id
         r.transaction_type = params[:transaction_type]
-        r.info = params[:info]
-        r.fund = "-#{params[:fund]}".to_f
+        r.info             = params[:info]
+        r.fund             = "-#{params[:fund]}".to_f
         # Following line added by Saravana
-        r.currency = params[:currency]
-        r.operation = "deduct"
+        r.currency         = params[:currency]
+        r.operation        = "deduct"
       end
       deducter.save
 
@@ -62,16 +62,22 @@ module HandleTransaction
     private
 
     def render_ws_response(*args)
-      responses = []
+      responses = {}
+      responses['errors'] = []
+      responses['transaction_id'] = nil
+      responses['success'] = false
 
       args.each do |o|
         next if o.nil? || o.errors.nil?
 
+        responses['transaction_id'] = o.id unless o.id.nil?
+
         o.errors.each do |k,v|
-          responses << v
+          responses['errors'] << v
         end
       end
-      
+      responses['success'] = true unless responses['transaction_id'].nil? || responses['errors'].length > 0
+
       responses
     end
   end
