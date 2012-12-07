@@ -12,9 +12,9 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url     = "http://aightify.localhost.com:3000/transactions"
+    url     = "http://aightify.localhost.com:3000/transactions/1/account?auth_token=123TEST"
 
-    transactions = RestClient.get url+"/1/account?auth_token=123TEST"
+    transactions = RestClient.get url
     transactions = JSON.parse(transactions)
 
     assert_equal Transaction.count, 2
@@ -27,7 +27,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions"+"/1/add/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3000/transactions/1/add/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
     add_credit = JSON.parse(add_credit)    
@@ -41,7 +41,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions"+"/5/add/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3000/transactions/5/add/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
     add_credit = JSON.parse(add_credit)
@@ -54,7 +54,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions"+"/2/deduct/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3000/transactions/2/deduct/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
     add_credit = JSON.parse(add_credit)
@@ -68,7 +68,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions"+"/5/deduct/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3000/transactions/5/deduct/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
     add_credit = JSON.parse(add_credit)

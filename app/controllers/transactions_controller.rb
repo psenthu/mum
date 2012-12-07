@@ -5,10 +5,8 @@ class TransactionsController < ApplicationController
 		@transactions = []
 		
     if params[:user_id]
-      puts "\nUser id is : #{params[:user_id]}\n"
       @transactions = Transaction.where(:user_id => params[:user_id])
     else
-      puts "get all"
       @transactions = Transaction.all
     end
 		
