@@ -3,18 +3,31 @@ class TransactionsController < ApplicationController
 
 	def index
 		@transactions = []
-		
+
     if params[:user_id]
       @transactions = Transaction.where(:user_id => params[:user_id])
     else
       @transactions = Transaction.all
     end
-		
+
 		respond_to do |format|
       format.json { render :json => @transactions}
     end
 	end
-	
+
+  def summary
+    @transaction = {}
+
+    if params[:user_id]
+      @transaction['money']    = Transaction.where(:user_id => params[:user_id]).sum('fund')
+      @transaction['currency'] = "USD"
+    end
+
+    respond_to do |format|
+      format.json { render :json => @transaction }
+    end
+  end
+
   def transfer
     params[:info] = "receiver: #{params[:to_user_id]}\ntransferer: #{params[:user_id]}"
     params[:transaction_type] = "TF"

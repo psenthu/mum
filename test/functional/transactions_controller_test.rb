@@ -12,7 +12,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url     = "http://aightify.localhost.com:3000/transactions/1/account?auth_token=123TEST"
+    url     = "http://aightify.localhost.com:3001/transactions?user_id=1&auth_token=123TEST"
 
     transactions = RestClient.get url
     transactions = JSON.parse(transactions)
@@ -22,15 +22,29 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_equal transactions[0]['user_id'], 1
   end
 
+  def test_get_account_summary_for_user
+    load_fixtures_to_db
+
+    ActsAsTenant.current_tenant = accounts(:aightify)
+
+    url = "http://aightify.localhost.com:3001/transactions/1/account?auth_token=123TEST"
+
+    transactions = RestClient.get url
+    transactions = JSON.parse(transactions)
+
+    assert_not_nil transactions['money']
+    assert_equal   transactions['currency'], "USD"
+  end
+
   def test_successfully_add_credit_via_rest
     load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions/1/add/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3001/transactions/1/add/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
-    add_credit = JSON.parse(add_credit)    
+    add_credit = JSON.parse(add_credit)
 
     assert_equal add_credit['errors'].length, 0
     assert_not_nil add_credit['transaction_id']
@@ -41,7 +55,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions/5/add/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3001/transactions/5/add/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
     add_credit = JSON.parse(add_credit)
@@ -54,7 +68,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions/2/deduct/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3001/transactions/2/deduct/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
     add_credit = JSON.parse(add_credit)
@@ -68,12 +82,12 @@ class TransactionsControllerTest < ActionController::TestCase
 
     ActsAsTenant.current_tenant = accounts(:aightify)
 
-    url = "http://aightify.localhost.com:3000/transactions/5/deduct/150.0/LKR?auth_token=123TEST"
+    url = "http://aightify.localhost.com:3001/transactions/5/deduct/150.0/LKR?auth_token=123TEST"
 
     add_credit = RestClient.post url, {}
     add_credit = JSON.parse(add_credit)
 
-    assert_equal add_credit['errors'].length, 1
+    assert_equal add_credit['errors'].length, 2
   end
 
 end

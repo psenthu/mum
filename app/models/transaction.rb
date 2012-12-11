@@ -39,10 +39,11 @@ class Transaction < ActiveRecord::Base
   end
 
   def validation
-    self.errors.add :fund, "200" if self.transaction_type == "TF" &&
+    self.errors.add :fund, "200" if self.transaction_type == "DC" &&
                                     self.fund &&
                                     self.operation == "deduct" &&
                                     !self.fund_available?
+                                    # !(Transaction.where(:user_id=>self.user_id.to_i).sum('fund') > self.fund.abs)
     return false
   end
 

@@ -16,6 +16,6 @@ Mum::Application.routes.draw do
     post "transactions/:user_id/deduct/:fund/:currency" => "transactions#deduct", :constraints => { :fund => /\d+\.*\d{0,2}/, :user_id => /[0-9]{1,10}/ }
 
     # => Following line added by Saravana on 04-12-2012. Route gets all transactions for user id
-    get "transactions/:user_id/account" => "transactions#index", :constraints => { :user_id => /[0-9]{1,10}/ }
+    get "transactions/:user_id/account" => "transactions#summary", :constraints => { :user_id => /[0-9]{1,10}/ }
   end
 end
