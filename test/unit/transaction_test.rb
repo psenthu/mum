@@ -6,7 +6,7 @@ class TransactionTest < ActiveSupport::TestCase
     load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
-    
+
     params                      = {}
     params[:user_id]            = sclients(:one).user_id
     params[:to_user_id]         = sclients(:two).user_id
@@ -21,14 +21,14 @@ class TransactionTest < ActiveSupport::TestCase
     assert_equal response['success'], true
     assert_not_nil response['transaction_id']
   end
-  
+
   ## Written by Saravana: Test to check transaction failure due to insufficient fund
-  
+
   def test_insufficient_fund_transfer_error
   	load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
-    
+
     params                      = {}
     params[:user_id]            = sclients(:one).user_id
     params[:to_user_id]         = sclients(:two).user_id
@@ -42,14 +42,14 @@ class TransactionTest < ActiveSupport::TestCase
     assert_equal response['errors'].length, 1
     assert_equal response['success'], false
   end
-  
+
   ####### Test End #################################################################
 
   def test_un_successful_fund_transfer
     load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
-    
+
     params                      = {}
     params[:user_id]            = "nn"
     params[:to_user_id]         = 88
@@ -69,7 +69,7 @@ class TransactionTest < ActiveSupport::TestCase
     load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
-    
+
     params                      = {}
     params[:user_id]            = sclients(:one).user_id
     params[:fund]               = 100
@@ -88,7 +88,7 @@ class TransactionTest < ActiveSupport::TestCase
     load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
-    
+
     params                      = {}
     params[:user_id]            = 90
     params[:cash]               = 100
@@ -107,7 +107,7 @@ class TransactionTest < ActiveSupport::TestCase
     load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
-    
+
     params                      = {}
     params[:user_id]            = sclients(:one).user_id
     params[:fund]               = 100
@@ -126,7 +126,7 @@ class TransactionTest < ActiveSupport::TestCase
     load_fixtures_to_db
 
     ActsAsTenant.current_tenant = accounts(:aightify)
-    
+
     params                      = {}
     params[:user_id]            = 9
     params[:cash]               = 100

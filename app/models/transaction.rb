@@ -5,12 +5,12 @@ class Transaction < ActiveRecord::Base
   belongs_to :account, :class_name => 'Account'#, :foreign_key => 'account_id'
 
   # => validations
-  validates :user_id, :numericality => {  :message      => "201", 
-                                          :greater_than => 0, 
-                                          :only_integer => true, 
+  validates :user_id, :numericality => {  :message      => "201",
+                                          :greater_than => 0,
+                                          :only_integer => true,
                                           :allow_nil    => false  }
 
-  validates :fund,    :numericality => {  :message      => "202", 
+  validates :fund,    :numericality => {  :message      => "202",
                                           :allow_nil    => false  }
 
   validate  :validation
@@ -26,7 +26,7 @@ class Transaction < ActiveRecord::Base
   before_save :set_user_id, :if => :transfer?
 
   scope :user_fund, lambda { |u_id| where("user_id = ?", u_id) }
-  
+
 
   private
 
@@ -39,9 +39,9 @@ class Transaction < ActiveRecord::Base
   end
 
   def validation
-    self.errors.add :fund, "200" if self.transaction_type == "TF" && 
-                                    self.fund && 
-                                    self.operation == "deduct" && 
+    self.errors.add :fund, "200" if self.transaction_type == "TF" &&
+                                    self.fund &&
+                                    self.operation == "deduct" &&
                                     !self.fund_available?
     return false
   end

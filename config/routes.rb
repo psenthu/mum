@@ -1,13 +1,10 @@
 Mum::Application.routes.draw do
   devise_for :users
 
-   # root :to => 'users#index'
-  #resources :users
-
   resources :token_authentications, :only => [:create, :destroy]
 
   resources :dashboard
-  
+
   resources :transactions
 
   resources :sclients
