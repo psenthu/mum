@@ -1,0 +1,28 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: mum_dev
+  pool: 35
+  username: root
+  password: "112233"
+  host: localhost
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: mum_test
+  pool: 35
+  username: root
+  password: "112233"
+  host: localhost
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: mum
+  pool: 5
+  username: root
+  password: "112233"
