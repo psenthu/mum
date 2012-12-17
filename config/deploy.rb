@@ -3,7 +3,7 @@ set :repository,  "git@github.com:psenthu/mum.git"
 
 set :scm, :git
 default_run_options[:pty] = true
-set :user, "deployer"
+set :user, "saravana"
 set :branch, "master"
 
 set :user_sudo, false
