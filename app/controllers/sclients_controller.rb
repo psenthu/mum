@@ -1,5 +1,6 @@
 class SclientsController < ApplicationController
   before_filter :authenticate_user!
+  respond_to :json
 
   def create
     @sclient = Sclient.new(params[:sclient])
