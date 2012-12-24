@@ -70,7 +70,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     url = "http://aightify.localhost.com:3001/transactions/2/deduct/150.0/LKR?auth_token=123TEST"
 
-    add_credit = RestClient.post url, {}
+    add_credit = RestClient.post url, {:info => "Product Name"}
     add_credit = JSON.parse(add_credit)
 
     assert_equal add_credit['errors'].length, 0
@@ -84,7 +84,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
     url = "http://aightify.localhost.com:3001/transactions/5/deduct/150.0/LKR?auth_token=123TEST"
 
-    add_credit = RestClient.post url, {}
+    add_credit = RestClient.post url, {:info => "Product Name"}
     add_credit = JSON.parse(add_credit)
 
     assert_equal add_credit['errors'].length, 2
