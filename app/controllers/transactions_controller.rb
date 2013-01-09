@@ -20,7 +20,7 @@ class TransactionsController < ApplicationController
 
     if params[:user_id]
       @transaction['money']    = Transaction.where(:user_id => params[:user_id]).sum('fund')
-      @transaction['currency'] = "USD"
+      @transaction['currency'] = "INR"
     end
 
     respond_to do |format|
